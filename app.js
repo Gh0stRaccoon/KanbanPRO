@@ -3,78 +3,82 @@ const { pool, verificarConexion } = require('./config/db');
 
 verificarConexion();
 
-// INSERTAR
-async function insertarTarea(titulo, descripcion) {
-  try {
-    const consulta = 'INSERT INTO tareas (titulo, descripcion) VALUES ($1, $2)';
-    const valores = [titulo, descripcion];
+// FUNCIÓN DE TRANSFERENCIA CON TRANSACCIÓN
 
-    const resultado = await pool.query(consulta, valores);
+async function realizarTransferencia(cuentaOrigenId, cuentaDestinoId, monto) {
+  const client = await pool.connect();
+
+  try {
+    console.log('Iniciando transferencia...');
+
+    // 1️⃣ BEGIN
+    await client.query('BEGIN');
+
+    // 2️⃣ Restar saldo cuenta origen
+    const descontar = `
+      UPDATE cuentas
+      SET saldo = saldo - $1
+      WHERE id = $2
+      RETURNING *;
+    `;
+
+    const resultadoOrigen = await client.query(descontar, [
+      monto,
+      cuentaOrigenId,
+    ]);
+
+    if (resultadoOrigen.rowCount === 0) {
+      throw new Error('Cuenta de origen no existe');
+    }
+
+    // 3️⃣ Sumar saldo cuenta destino
+    const sumar = `
+      UPDATE cuentas
+      SET saldo = saldo + $1
+      WHERE id = $2
+      RETURNING *;
+    `;
+
+    const resultadoDestino = await client.query(sumar, [
+      monto,
+      cuentaDestinoId,
+    ]);
+
+    if (resultadoDestino.rowCount === 0) {
+      throw new Error('Cuenta de destino no existe');
+    }
+
+    // 4️⃣ COMMIT
+    await client.query('COMMIT');
 
     console.log(
-      `Tarea "${titulo}" insertada con éxito. Filas afectadas: ${resultado.rowCount}`
+      `Transferencia exitosa: $${monto} de cuenta ${cuentaOrigenId} a cuenta ${cuentaDestinoId}`
     );
   } catch (error) {
-    console.error('Error al insertar tarea:', error.message);
+    // 5️⃣ ROLLBACK
+    await client.query('ROLLBACK');
+    console.error('Error en la transferencia. Transacción revertida.');
+    console.error('Detalle:', error.message);
+  } finally {
+    // 6️⃣ Liberar cliente
+    client.release();
+    console.log('Cliente liberado.\n');
   }
 }
 
-// ACTUALIZAR
-async function actualizarTarea(id, nuevoTitulo, nuevaDescripcion) {
-  try {
-    const consulta =
-      'UPDATE tareas SET titulo = $1, descripcion = $2 WHERE id = $3';
-    const valores = [nuevoTitulo, nuevaDescripcion, id];
 
-    const resultado = await pool.query(consulta, valores);
-
-    if (resultado.rowCount === 0) {
-      console.log(`No existe una tarea con ID ${id}.`);
-    } else {
-      console.log(
-        `Tarea con ID ${id} actualizada. Filas afectadas: ${resultado.rowCount}`
-      );
-    }
-  } catch (error) {
-    console.error('Error al actualizar tarea:', error.message);
-  }
-}
-
-// ELIMINAR
-async function eliminarTarea(id) {
-  try {
-    const consulta = 'DELETE FROM tareas WHERE id = $1';
-    const valores = [id];
-
-    const resultado = await pool.query(consulta, valores);
-
-    if (resultado.rowCount === 0) {
-      console.log(`No existe una tarea con ID ${id}.`);
-    } else {
-      console.log(
-        `Tarea con ID ${id} eliminada. Filas afectadas: ${resultado.rowCount}`
-      );
-    }
-  } catch (error) {
-    console.error('Error al eliminar tarea:', error.message);
-  }
-}
-
-// FUNCIÓN PRINCIPAL DE PRUEBA
 async function main() {
   try {
-    await insertarTarea('Nueva Tarea', 'Descripción de la nueva tarea.');
-    await actualizarTarea(
-      1,
-      'Aprender PostgreSQL',
-      'Completar todos los ejercicios de la guía de base de datos.'
-    );
-    await eliminarTarea(2); // Ajusta el ID según lo que exista
+    // Transferencia exitosa
+    await realizarTransferencia(1, 2, 100.0);
+
+    // Transferencia con saldo insuficiente (activará CHECK saldo >= 0)
+    await realizarTransferencia(2, 1, 600.0);
   } catch (error) {
-    console.error('Error en la ejecución principal:', error.message);
+    console.error('Error general:', error.message);
   } finally {
-    await pool.end(); // cerrar conexión
+    await pool.end();
   }
 }
 
-main();
+main(); 
