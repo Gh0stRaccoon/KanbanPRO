@@ -1,6 +1,7 @@
 const User = require("./User");
 const Tablero = require("./Tablero");
 const Lista = require("./Lista");
+const Tarjeta = require("./Tarjeta");
 
 // =========================
 // RELACIONES
@@ -28,8 +29,20 @@ Lista.belongsTo(Tablero, {
   as: "tablero"
 });
 
+// Lista → Tarjetas
+Lista.hasMany(Tarjeta, {
+  foreignKey: "listaId",
+  as: "tarjetas"
+});
+
+Tarjeta.belongsTo(Lista, {
+  foreignKey: "listaId",
+  as: "lista"
+});
+
 module.exports = {
   User,
   Tablero,
-  Lista
+  Lista,
+  Tarjeta
 };
