@@ -4,6 +4,7 @@ const { sequelize } = require("./config/db");
 const express = require("express");
 const path = require("path");
 const hbs = require("hbs");
+const { Tablero, Lista, Tarjeta } = require("./models");
 
 const app = express();
 const PORT = 3000;
@@ -37,12 +38,44 @@ app.get("/login", (req, res) => {
   res.render("login", { title: "Login" });
 });
 
-// ⚠️ Dashboard ahora SIN lógica (se conectará luego a DB)
-app.get("/dashboard", (req, res) => {
-  res.render("dashboard", {
-    title: "Dashboard",
-    board: null // luego vendrá desde DB/API
-  });
+app.get("/dashboard", async (req, res) => {
+  try {
+    const userId = 1;
+
+    const tablero = await Tablero.findOne({
+      where: { userId },
+      include: {
+        model: Lista,
+        as: "listas",
+        include: {
+          model: Tarjeta,
+          as: "tarjetas"
+        }
+      }
+    });
+
+    // 🔁 TRANSFORMACIÓN (clave)
+    const board = {
+      name: tablero.titulo,
+      lists: tablero.listas.map(lista => ({
+        id: lista.id,
+        name: lista.titulo,
+        cards: lista.tarjetas.map(t => ({
+          id: t.id,
+          title: t.titulo
+        }))
+      }))
+    };
+
+    res.render("dashboard", {
+      title: "Dashboard",
+      board
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.send("Error cargando dashboard");
+  }
 });
 
 /* =========================
