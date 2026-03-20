@@ -4,8 +4,7 @@ const User = require("../models/User");
 
 /* REGISTER */
 exports.register = async (req, res) => {
-    console.log("🚀 Entrando a REGISTER");
-  console.log("📦 BODY:", req.body);
+
   const { email, password } = req.body;
 
   try {
@@ -35,7 +34,6 @@ exports.register = async (req, res) => {
 /* LOGIN */
 exports.login = async (req, res) => {
   const { email, password } = req.body;
-  console.log("📥 BODY:", req.body);
 
   try {
     const user = await User.findOne({ where: { email } });
@@ -56,7 +54,6 @@ exports.login = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    console.log("🔐 JWT_SECRET:", process.env.JWT_SECRET);
     res.json({ token });
 
   } catch (error) {
