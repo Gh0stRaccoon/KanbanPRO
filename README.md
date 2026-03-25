@@ -1,3 +1,3 @@
-## EF- M7 Proyecto integrador Sprint 3
+## EF- M8 Proyecto integrador Sprint 3
 
 ### Proyecto: "KanbanPro" - Kick-off del Sprint 3
