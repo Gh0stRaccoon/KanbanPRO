@@ -14,6 +14,11 @@ exports.createTarjeta = async (req, res) => {
       }
     });
 
+    
+  console.log("TOKEN USER:", req.usuario.id);
+console.log("TABLERO USER:", lista.tablero.userId);
+console.log("LISTA ID:", listaId);
+
     if (!lista) {
   return res.status(404).json({ error: "Lista no encontrada" });
 }

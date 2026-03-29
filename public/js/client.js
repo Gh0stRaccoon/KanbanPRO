@@ -8,20 +8,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const title = form.title.value;
     const listId = form.listId.value;
 
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      alert("No estás autenticado");
-      return;
-    }
-
     try {
       const response = await fetch(`/api/listas/${listId}/tarjetas`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          "Content-Type": "application/json"
         },
+        credentials: "include", // 🔑 usa cookies
         body: JSON.stringify({
           titulo: title,
           descripcion: ""
@@ -31,11 +24,18 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
 
       if (!response.ok) {
+
+        // 🔥 manejo inteligente de auth
+        if (response.status === 401 || response.status === 403) {
+          alert("Sesión expirada, inicia sesión nuevamente");
+          window.location.href = "/login";
+          return;
+        }
+
         alert(data.error || "Error");
         return;
       }
 
-      // recargar para ver cambios
       location.reload();
 
     } catch (error) {

@@ -1,32 +1,32 @@
 const jwt = require("jsonwebtoken");
 
 function verificarToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
+  console.log("👉 Middleware ejecutándose");
 
-  // 1. Validar existencia del header
-  if (!authHeader) {
-    return res.status(401).json({ error: "Token requerido" });
+  const token = req.cookies.token;
+
+  console.log("COOKIE TOKEN:", token);
+
+  // 1. Validar existencia del token
+  if (!token) {
+    console.log("❌ No hay cookie");
+    return res.status(401).json({ error: "No autenticado" });
   }
-
-  // 2. Validar formato Bearer
-  if (!authHeader.startsWith("Bearer ")) {
-    return res.status(403).json({ error: "Formato de token inválido" });
-  }
-
-  // 3. Extraer token
-  const token = authHeader.split(" ")[1];
 
   try {
-    // 4. Verificar token
+    // 2. Verificar token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // 5. Guardar info del usuario en request
+    console.log("✅ Token válido:", decoded);
+
+    // 3. Guardar usuario
     req.usuario = decoded;
 
     next();
 
   } catch (error) {
-    return res.status(403).json({ error: "Token inválido o expirado" });
+    console.log("❌ Token inválido:", error.message);
+    return res.status(403).json({ error: "Sesión inválida o expirada" });
   }
 }
 
