@@ -67,14 +67,19 @@ app.get("/dashboard", verificarUsuario, async (req, res) => {
       });
 
       // Crear listas base
-      const listasBase = ["Pendiente", "En progreso", "Hecho"];
+      const listasBase = [
+        { titulo: "Pendiente", tipo: "todo" },
+        { titulo: "En progreso", tipo: "doing" },
+        { titulo: "Hecho", tipo: "done" }
+      ];
 
       await Lista.bulkCreate(
-        listasBase.map((nombre, index) => ({
-          titulo: nombre,
+        listasBase.map((lista, index) => ({
+          titulo: lista.titulo,
+          tipo: lista.tipo, // 🔥 también aquí
           tableroId: nuevoTablero.id,
           orden: index,
-        })),
+        }))
       );
 
       // Volver a consultar con relaciones
@@ -98,6 +103,7 @@ app.get("/dashboard", verificarUsuario, async (req, res) => {
       lists: tablero.listas.map((lista) => ({
         id: lista.id,
         name: lista.titulo,
+        tipo: lista.tipo,
         cards: lista.tarjetas.map((t) => ({
           id: t.id,
           title: t.titulo,

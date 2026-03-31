@@ -24,8 +24,8 @@ KanbanPRO is a powerful and intuitive project management tool designed to help t
 - **Integrations**: Connect KanbanPRO with your favorite tools like Slack, Google Drive, and more.
 
 ## Technologies Used:
-- **Frontend**: React, Redux, Material-UI
-- **Backend**: Node.js, Express
+- **Frontend**: html, CSS, JavaScript, bootstrap, Handlebars
+- **Backend**: Node.js, Express, Sequelize
 - **Database**: PostreSQL
 - **Authentication**: JWT (JSON Web Tokens)
 
@@ -69,28 +69,61 @@ Here are some screenshots of KanbanPRO in action:
 ![Screenshot 2](./screenshot2.png)
 ![Screenshot 3](./screenshot3.png)
 
-## FAQ
-**Q: Is KanbanPRO free to use?**
-A: Yes, KanbanPRO is free to use for individuals and small teams. We also offer premium plans with additional features for larger teams and organizations.
-**Q: Can I customize the boards in KanbanPRO?**
-A: Yes, KanbanPRO allows you to customize your boards with different columns, labels, and colors to fit your team's workflow.
-**Q: Does KanbanPRO support integrations with other tools?**
-A: Yes, KanbanPRO supports integrations with popular tools like Slack, Google Drive, and more to help you streamline your workflow.
-**Q: How can I contribute to KanbanPRO?**
-A: We welcome contributions! You can open an issue or submit a pull request on our GitHub repository. Please make sure to follow our contribution guidelines.
-**Q: Is there a mobile app for KanbanPRO?**
-A: Yes, we are currently developing a mobile app for KanbanPRO. Stay tuned for updates on its release!
-**Q: How can I contact the KanbanPRO team?**
-A: You can reach out to us at [contact@kanbanpro.com](mailto:contact@kanbanpro.com). We would love to hear from you!
-**Q: What technologies were used to build KanbanPRO?**
-A: KanbanPRO was built using React for the frontend, Node.js and Express for the backend, and MongoDB for the database. We also use various libraries and tools to enhance the functionality and user experience of the application.
-**Q: Can I export my data from KanbanPRO?**
-A: Yes, KanbanPRO allows you to export your data in various formats such as CSV and JSON for easy backup and migration.
-**Q: Is there a way to track time spent on tasks in KanbanPRO?**
-A: Yes, KanbanPRO includes a time tracking feature that allows you to log the time spent on each task and generate reports for better project management.
-**Q: How secure is my data in KanbanPRO?**
-A: We take data security seriously. KanbanPRO uses industry-standard encryption and security practices to protect your data. We also regularly update our security measures to ensure the safety of your information.
-**Q: Can I use KanbanPRO for personal projects?**
-A: Absolutely! KanbanPRO is designed to be flexible and can be used for both personal and professional projects. Whether you're managing a personal to-do list or a complex team project, KanbanPRO can help you stay organized and productive.
+---
+
+## ❓ FAQ
+
+### ¿Is KanbanPRO free to use?
+Yes, KanbanPRO is free to use for individuals and small teams. We also offer premium plans with additional features for larger teams and organizations.
+
+---
+
+### ¿Can I customize the boards in KanbanPRO?
+Yes, KanbanPRO allows you to customize your boards with different columns, labels, and colors to fit your team's workflow.
+
+---
+
+### ¿Does KanbanPRO support integrations with other tools?
+Yes, KanbanPRO supports integrations with popular tools like Slack, Google Drive, and more to help you streamline your workflow.
+
+---
+
+### ¿How can I contribute to KanbanPRO?
+We welcome contributions! You can open an issue or submit a pull request on our GitHub repository. Please make sure to follow our contribution guidelines.
+
+---
+
+### ¿Is there a mobile app for KanbanPRO?
+Yes, we are currently developing a mobile app for KanbanPRO. Stay tuned for updates on its release.
+
+---
+
+### ¿How can I contact the KanbanPRO team?
+You can reach out to us at [contact@kanbanpro.com](mailto:contact@kanbanpro.com). We would love to hear from you!
+
+---
+
+### ¿What technologies were used to build KanbanPRO?
+KanbanPRO was built using React for the frontend, Node.js and Express for the backend, and MongoDB for the database. We also use various libraries and tools to enhance the functionality and user experience of the application.
+
+---
+
+### ¿Can I export my data from KanbanPRO?
+Yes, KanbanPRO allows you to export your data in various formats such as CSV and JSON for easy backup and migration.
+
+---
+
+### ¿Is there a way to track time spent on tasks in KanbanPRO?
+Yes, KanbanPRO includes a time tracking feature that allows you to log the time spent on each task and generate reports for better project management.
+
+---
+
+### ¿How secure is my data in KanbanPRO?
+We take data security seriously. KanbanPRO uses industry-standard encryption and security practices to protect your data. We also regularly update our security measures to ensure the safety of your information.
+
+---
+
+### ¿Can I use KanbanPRO for personal projects?
+Absolutely! KanbanPRO is designed to be flexible and can be used for both personal and professional projects. Whether you're managing a personal to-do list or a complex team project, KanbanPRO can help you stay organized and productive.
 
 

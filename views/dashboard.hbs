@@ -22,12 +22,13 @@
 <div class="board-lists">
 
   {{#each board.lists}}
-    <div class="list">
-      <h3>{{this.name}}</h3>
+    <div class="list list-{{this.tipo}}">
+      
+      <h3 class="list-title">{{this.name}}</h3>
 
       <ul>
         {{#each this.cards}}
-          <li>{{this.title}}</li>
+          <li class="card-item">{{this.title}}</li>
         {{/each}}
       </ul>
 

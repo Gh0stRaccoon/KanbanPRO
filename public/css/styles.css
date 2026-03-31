@@ -1,138 +1,189 @@
-* {
+/* =========================
+   RESET + BASE
+========================= */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background-color: #f4f4f4;
-    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
+    color: #2d2d2d;
+    line-height: 1.5;
 }
 
-header {
-    background-color: #007bff;
-    color: white;
-    padding: 20px;
+/* =========================
+   TYPOGRAPHY
+========================= */
+h1, h2, h3 {
     text-align: center;
+    margin-bottom: 16px;
 }
 
 h1 {
-    margin: 0;
     padding: 12px;
-    text-align: center;
 }
 
-h2, h3 {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
+/* =========================
+   NAVBAR
+========================= */
 nav {
-    background-color: #333;
+    background: linear-gradient(135deg, #007bff, #0056b3);
     color: white;
-    padding: 10px;
+    padding: 16px;
     text-align: center;
 }
 
 nav a {
     color: white;
-    margin: 0 15px;
+    margin: 0 12px;
     text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.2s ease;
 }
 
 nav a:hover {
-    text-decoration: underline;
+    opacity: 0.8;
 }
 
+/* =========================
+   LAYOUT
+========================= */
 main {
-    padding: 20px;
+    padding: 24px;
 }
 
-.firtsP {
+.center-text {
     text-align: center;
 }
 
+/* =========================
+   CARD BASE (REUTILIZABLE)
+========================= */
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+/* =========================
+   FORMULARIOS
+========================= */
+form {
+    max-width: 400px;
+    margin: 40px auto;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+input,
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.2);
+}
+
+/* =========================
+   BOTONES
+========================= */
+button {
+    padding: 10px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+    box-shadow: 0 4px 12px rgba(0,123,255,0.3);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* =========================
+   BOARD (KANBAN)
+========================= */
 .board-lists {
     display: flex;
     gap: 20px;
     justify-content: center;
+    align-items: flex-start;
 }
 
-.board-lists .list {
-    background-color: white;
-    padding: 10px;
-    border-radius: 5px;
+.list {
     width: 300px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 12px;
+    background-color: #e9ecef;
 }
 
-.board-lists .list li {
-    padding: 10px;
+.list ul {
+    list-style: none;
+}
+
+.list li {
+    padding: 12px;
     margin-bottom: 10px;
-    background-color: #f4f4f4;
-    border-radius: 3px;
-    list-style-type: none;
+    background: #f1f3f5;
+    border-radius: 6px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-footer {
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+.list li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
+.list-todo .list-title {
+    color: #6c757d;
+}
+
+.list-doing .list-title {
+    color: #ffc107;
+}
+
+.list-done .list-title {
+    color: #28a745;
+}
+
+.list-todo { border-top: 4px solid gray; }
+.list-doing { border-top: 4px solid orange; }
+.list-done { border-top: 4px solid green; }
+
+/* =========================
+   LOGIN
+========================= */
 .login-container {
     max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 60px auto;
 }
 
-.login-container h2 {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.login-container form {
-    display: flex;
-    flex-direction: column;
-}
-
-.login-container label {
-    margin-bottom: 5px;
-}
-
-.login-container input {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
-
-.login-container button {
-    padding: 10px;
-    background-color: #007bff;
+/* =========================
+   FOOTER
+========================= */
+footer {
+    background-color: #1f1f1f;
     color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-.login-container button:hover {
-    background-color: #0056b3;
-}
-
-form {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 12px;
+    text-align: center;
 }

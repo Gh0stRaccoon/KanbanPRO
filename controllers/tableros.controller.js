@@ -29,11 +29,16 @@ exports.createTablero = async (req, res) => {
     });
 
     // Listas base
-    const listasBase = ["Pendiente", "En progreso", "Hecho"];
+    const listasBase = [
+      { titulo: "Pendiente", tipo: "todo" },
+      { titulo: "En progreso", tipo: "doing" },
+      { titulo: "Hecho", tipo: "done" }
+    ];
 
     const listas = await Lista.bulkCreate(
-      listasBase.map(nombre => ({
-        titulo: nombre,
+      listasBase.map(lista => ({
+        titulo: lista.titulo,
+        tipo: lista.tipo,
         tableroId: tablero.id
       }))
     );

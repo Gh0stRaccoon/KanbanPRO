@@ -15,6 +15,10 @@ const Lista = sequelize.define("Lista", {
     type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 0
+  },
+  tipo: {
+    type: DataTypes.STRING, // 👈 ESTE FALTA
+    allowNull: false
   }
 }, {
   tableName: "listas",
