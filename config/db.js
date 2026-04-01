@@ -1,14 +1,16 @@
 const { Sequelize } = require("sequelize");
+const pg = require("pg");
 require("dotenv").config();
 
 const sequelize = new Sequelize(process.env.DB_URI, {
   dialect: "postgres",
+  dialectModule: pg,
   logging: false,
   dialectOptions: {
-    // ssl: {
-    //   require: true,
-    //   rejectUnauthorized: false
-    // }
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
   }
 });
 
